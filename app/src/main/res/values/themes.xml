@@ -3,6 +3,12 @@
     <style name="Base.Theme.CourseApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- главный цвет фона для приложения -->
+        <item name="android:windowBackground">@color/main_bg_color</item>
+        <!-- главный шрифт для приложения -->
+        <item name="android:fontFamily">@font/roboto</item>
+
     </style>
 
     <style name="Theme.CourseApp" parent="Base.Theme.CourseApp" />
