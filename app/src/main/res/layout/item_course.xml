@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="24dp"
+    app:cardPreventCornerOverlap="false"
+    app:strokeWidth="0dp"
+    app:strokeColor="@android:color/transparent"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/menu_bg_color">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_course_image"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="24dp"
+            app:cardPreventCornerOverlap="false"
+            app:strokeWidth="0dp"
+            app:strokeColor="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_course_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_java_developer" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_favorites_unselected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="5dp"
+            android:alpha="0.5"
+            android:background="@drawable/bg_text_field"
+            app:layout_constraintStart_toStartOf="@id/tv_course_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_course_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_course_rating"
+            app:layout_constraintEnd_toEndOf="@id/tv_course_rating"/>
+
+        <TextView
+            android:id="@+id/tv_course_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:paddingVertical="4dp"
+            android:paddingHorizontal="8dp"
+            android:gravity="center"
+            android:elevation="5dp"
+            android:drawableStart="@drawable/ic_star_fill"
+            android:drawablePadding="4dp"
+            android:textColor="@color/text_color_1"
+            app:layout_constraintStart_toStartOf="@id/cv_course_image"
+            app:layout_constraintBottom_toBottomOf="@id/cv_course_image"
+            tools:text="4.9"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="5dp"
+            android:alpha="0.5"
+            android:background="@drawable/bg_text_field"
+            app:layout_constraintStart_toStartOf="@id/tv_start_date"
+            app:layout_constraintBottom_toBottomOf="@id/tv_start_date"
+            app:layout_constraintTop_toTopOf="@id/tv_start_date"
+            app:layout_constraintEnd_toEndOf="@id/tv_start_date"/>
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:elevation="5dp"
+            android:paddingVertical="4dp"
+            android:paddingHorizontal="8dp"
+            tools:text="22.05.2024"
+            android:textColor="@color/text_color_1"
+            app:layout_constraintStart_toEndOf="@id/tv_course_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_course_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_course_rating" />
+
+        <TextView
+            android:id="@+id/tv_course_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:textColor="@color/text_color_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/cv_course_image"
+            app:layout_constraintTop_toBottomOf="@id/cv_course_image"
+            tools:text="Java-разработчик с нуля"/>
+
+        <TextView
+            android:id="@+id/tv_course_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/text_color_1"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/tv_course_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_course_title"
+            app:layout_constraintEnd_toEndOf="@id/iv_favorite"
+            tools:text="Освойте backend-разработку  и программирование на Java, фреймворки"/>
+
+        <TextView
+            android:id="@+id/tv_course_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:textColor="@color/btn_bg_color_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_course_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_course_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="999 ₽"/>
+
+        <ImageView
+            android:id="@+id/iv_detailed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_detailed"
+            app:layout_constraintEnd_toEndOf="@id/iv_favorite"
+            app:layout_constraintTop_toTopOf="@id/tv_course_price"
+            app:layout_constraintBottom_toBottomOf="@id/tv_course_price"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

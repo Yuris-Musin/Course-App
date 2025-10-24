@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_menu"
         android:title="@string/home"
         app:showAsAction="withText" />
 
     <item
         android:id="@+id/favorites"
-        android:icon="@drawable/ic_favorites"
+        android:icon="@drawable/ic_favorites_menu"
         android:title="@string/favorites"
         app:showAsAction="withText" />
 
     <item
         android:id="@+id/account"
-        android:icon="@drawable/ic_account"
+        android:icon="@drawable/ic_account_menu"
         android:title="@string/account"
         app:showAsAction="withText"/>
 

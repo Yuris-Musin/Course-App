@@ -7,6 +7,9 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import ru.musindev.courseapp.App
 import ru.musindev.courseapp.di.modules.MainModule
+import ru.musindev.courseapp.di.modules.NetworkModule
+import ru.musindev.courseapp.di.modules.RepositoryModule
+import ru.musindev.courseapp.di.modules.ViewModelModule
 import javax.inject.Singleton
 
 @Singleton
@@ -15,13 +18,9 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         MainModule::class,
-//        AppModule::class,
-//        DatabaseModule::class,
-//        DataModule::class,
-//        DomainModule::class,
-//        MappersModule::class,
-//        RemoteModule::class,
-//        SharedPreferencesModule::class,
+        NetworkModule::class,
+        RepositoryModule::class,
+        ViewModelModule::class
     ]
 )
 

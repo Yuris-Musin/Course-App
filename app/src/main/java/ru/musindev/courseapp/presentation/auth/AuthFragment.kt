@@ -10,31 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import dagger.android.support.AndroidSupportInjection
 import ru.musindev.courseapp.R
+import ru.musindev.courseapp.core.base.BaseFragment
 import ru.musindev.courseapp.databinding.FragmentAuthBinding
 import ru.musindev.courseapp.presentation.activity.MainActivity
 
-class AuthFragment : Fragment() {
+class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
-    private var _binding: FragmentAuthBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentAuthBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun inflaterViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentAuthBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
