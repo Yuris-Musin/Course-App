@@ -8,5 +8,6 @@
     <color name="text_color_2">#929296</color>
     <color name="text_field_bg_color">#32333A</color>
     <color name="btn_bg_color_1">#12B956</color>
+    <color name="color_view_1">#4D555E</color>
 
 </resources>

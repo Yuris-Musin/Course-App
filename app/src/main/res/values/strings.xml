@@ -16,4 +16,5 @@
     <string name="no_account">Нет аккаунта? <font color='#12B956'>Регистрация</font></string>
     <string name="forgot_pass">Забыл пароль</string>
     <string name="by_date_added">По дате добавления</string>
+    <string name="no_favorites">Нет избранных курсов</string>
 </resources>

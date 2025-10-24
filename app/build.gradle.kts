@@ -72,4 +72,12 @@ dependencies {
     /** Retrofit - Adapter - Result */
     implementation(libs.retrofit.adapters.result)
 
+    // AdapterDelegates
+    implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.2")
+    implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
+
+    // Glide для загрузки изображений (опционально)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
 }
