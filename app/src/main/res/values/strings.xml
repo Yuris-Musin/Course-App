@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Course App</string>
+
+    <string name="home">Главная</string>
+    <string name="favorites">Избранное</string>
+    <string name="account">Аккаунт</string>
+
+    <string name="email_hint">example@gmail.com</string>
+    <string name="password_hint">Введите пароль</string>
+    <string name="password">Пароль</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">Email</string>
+    <string name="input">Вход</string>
+    <string name="no_account">Нет аккаунта? <font color='#12B956'>Регистрация</font></string>
+    <string name="forgot_pass">Забыл пароль</string>
+    <string name="by_date_added">По дате добавления</string>
 </resources>
