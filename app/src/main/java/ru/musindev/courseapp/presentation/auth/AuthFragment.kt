@@ -13,6 +13,8 @@ import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import ru.musindev.courseapp.R
 import ru.musindev.courseapp.core.base.BaseFragment
+import ru.musindev.courseapp.core.constants.Urls.OK_URL
+import ru.musindev.courseapp.core.constants.Urls.VK_URL
 import ru.musindev.courseapp.databinding.FragmentAuthBinding
 import ru.musindev.courseapp.presentation.activity.MainActivity
 
@@ -35,24 +37,21 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         fun validateInput() {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            // Проверяем email по стандартному паттерну и пароль не пустой
             val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
             binding.btnSignIn.isEnabled = isEmailValid && password.isNotEmpty()
         }
 
-        // Слушатели на изменение текста
         binding.etEmail.doOnTextChanged { _, _, _, _ -> validateInput() }
         binding.etPassword.doOnTextChanged { _, _, _, _ -> validateInput() }
 
-        // Изначально деактивируем кнопку
         binding.btnSignIn.isEnabled = false
 
         binding.btnSignInVk.setOnClickListener {
-            openWebsite(requireContext(), "https://vk.com")
+            openWebsite(requireContext(), VK_URL)
         }
 
         binding.btnSignInOk.setOnClickListener {
-            openWebsite(requireContext(), "https://ok.ru")
+            openWebsite(requireContext(), OK_URL)
         }
 
         binding.btnSignIn.setOnClickListener {

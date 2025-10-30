@@ -36,4 +36,5 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
 }

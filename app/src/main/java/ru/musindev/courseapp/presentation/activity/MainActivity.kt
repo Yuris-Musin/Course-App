@@ -11,7 +11,6 @@ import androidx.navigation.ui.setupWithNavController
 import ru.musindev.courseapp.R
 import ru.musindev.courseapp.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -54,8 +53,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-
 
     }
 
