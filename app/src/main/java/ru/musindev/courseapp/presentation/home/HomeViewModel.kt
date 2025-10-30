@@ -1,36 +1,39 @@
 package ru.musindev.courseapp.presentation.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.musindev.courseapp.domain.model.Course
 import ru.musindev.courseapp.domain.usecase.GetCoursesUseCase
+import ru.musindev.courseapp.domain.usecase.SortCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.ToggleFavoriteUseCase
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val getCoursesUseCase: GetCoursesUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val sortCoursesUseCase: SortCoursesUseCase
 ) : ViewModel() {
 
-    private val _courses = MutableLiveData<List<Course>>()
-    val courses: LiveData<List<Course>> = _courses
+    private val _courses = MutableStateFlow<List<Course>>(emptyList())
+    val courses: StateFlow<List<Course>>
+        get() = _courses.asStateFlow()
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean>
+        get() = _isLoading.asStateFlow()
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?>
+        get() = _error.asStateFlow()
 
-    // Состояние сортировки: true = по убыванию, false = по возрастанию
-    private val _isSortedDescending = MutableLiveData<Boolean>(true)
-    val isSortedDescending: LiveData<Boolean> = _isSortedDescending
+    private val _isSortedDescending = MutableStateFlow(true)
+    val isSortedDescending: StateFlow<Boolean>
+        get() = _isSortedDescending.asStateFlow()
 
-    // Хранение оригинального списка
     private var originalCourses: List<Course> = emptyList()
 
     fun loadCourses() {
@@ -41,7 +44,7 @@ class HomeViewModel @Inject constructor(
             getCoursesUseCase()
                 .onSuccess { coursesList ->
                     originalCourses = coursesList
-                    applySorting(coursesList)
+                    applySorting()
                     _isLoading.value = false
                 }
                 .onFailure { exception ->
@@ -55,7 +58,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             toggleFavoriteUseCase(courseId)
                 .onSuccess {
-                    // Обновляем список курсов
                     loadCourses()
                 }
                 .onFailure { exception ->
@@ -67,36 +69,14 @@ class HomeViewModel @Inject constructor(
     fun toggleSorting() {
         val currentSortOrder = _isSortedDescending.value ?: true
         _isSortedDescending.value = !currentSortOrder
-        applySorting(originalCourses)
+        applySorting()
     }
 
-    private fun applySorting(coursesList: List<Course>) {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-        val sortedList = try {
-            if (_isSortedDescending.value == true) {
-                // Сортировка по убыванию (новые сначала)
-                coursesList.sortedByDescending { course ->
-                    try {
-                        dateFormat.parse(course.publishDate)?.time ?: 0L
-                    } catch (e: Exception) {
-                        0L
-                    }
-                }
-            } else {
-                // Сортировка по возрастанию (старые сначала)
-                coursesList.sortedBy { course ->
-                    try {
-                        dateFormat.parse(course.publishDate)?.time ?: 0L
-                    } catch (e: Exception) {
-                        0L
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            coursesList
-        }
-
+    private fun applySorting() {
+        val sortedList = sortCoursesUseCase.invoke(
+            courses = originalCourses,
+            descending = _isSortedDescending.value == true
+        )
         _courses.value = sortedList
     }
 }

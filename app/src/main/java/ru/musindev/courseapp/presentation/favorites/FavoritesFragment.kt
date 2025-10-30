@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import ru.musindev.courseapp.core.base.BaseFragment
 import ru.musindev.courseapp.databinding.FragmentFavoritesBinding
 import ru.musindev.courseapp.presentation.home.adapter.CoursesAdapter
@@ -27,16 +29,12 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Инициализация ViewModel
         viewModel = ViewModelProvider(this, viewModelFactory)[FavoritesViewModel::class.java]
 
-        // Настройка адаптера
         setupAdapter()
 
-        // Наблюдение за данными
-        observeViewModel()
+        collectViewModel()
 
-        // Загрузка избранных курсов
         viewModel.loadFavoriteCourses()
     }
 
@@ -52,27 +50,36 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         binding.rvFavoriteCourses.adapter = adapter
     }
 
-    private fun observeViewModel() {
-        viewModel.favoriteCourses.observe(viewLifecycleOwner) { courses ->
-            if (courses.isEmpty()) {
-                binding.tvEmpty.visibility = View.VISIBLE
-                binding.rvFavoriteCourses.visibility = View.GONE
-            } else {
-                binding.tvEmpty.visibility = View.GONE
-                binding.rvFavoriteCourses.visibility = View.VISIBLE
-                adapter.submitList(courses)
+    private fun collectViewModel() {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.favoriteCourses.collect { courses ->
+                if (courses.isEmpty()) {
+                    binding.tvEmpty.visibility = View.VISIBLE
+                    binding.rvFavoriteCourses.visibility = View.GONE
+                } else {
+                    binding.tvEmpty.visibility = View.GONE
+                    binding.rvFavoriteCourses.visibility = View.VISIBLE
+                    adapter.submitList(courses)
+                }
             }
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
-
-        viewModel.error.observe(viewLifecycleOwner) { error ->
-            error?.let {
-                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isLoading.collect {isLoading ->
+                binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.error.collect { error ->
+                error?.let {
+                    Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                }
+
+            }
+        }
+
     }
 
 }

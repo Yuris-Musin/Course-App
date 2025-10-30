@@ -7,6 +7,8 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import ru.musindev.courseapp.R
 import ru.musindev.courseapp.databinding.ItemCourseBinding
 import ru.musindev.courseapp.domain.model.Course
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class CourseAdapterDelegate(
     private val onCourseClick: (Course) -> Unit,
@@ -47,9 +49,8 @@ class CourseAdapterDelegate(
                 tvCourseDescription.text = course.description
                 tvCoursePrice.text = "${course.price} ₽"
                 tvCourseRating.text = course.rating.toString()
-                tvStartDate.text = course.startDate
+                tvStartDate.text = formatDate(course.startDate)
 
-                // Установка иконки избранного
                 ivFavorite.setImageResource(
                     if (course.isFavorite) {
                         R.drawable.ic_favorites_selected
@@ -58,10 +59,20 @@ class CourseAdapterDelegate(
                     }
                 )
 
-                // Обработчики кликов
                 root.setOnClickListener { onCourseClick(course) }
                 ivFavorite.setOnClickListener { onFavoriteClick(course.id) }
             }
         }
+    }
+}
+
+private fun formatDate(dateString: String): String {
+    return try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        val date = inputFormat.parse(dateString)
+        outputFormat.format(date ?: return dateString)
+    } catch (e: Exception) {
+        dateString
     }
 }

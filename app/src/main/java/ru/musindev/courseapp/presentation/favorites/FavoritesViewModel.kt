@@ -1,41 +1,48 @@
 package ru.musindev.courseapp.presentation.favorites
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.musindev.courseapp.domain.model.Course
-import ru.musindev.courseapp.domain.repository.CourseRepository
+import ru.musindev.courseapp.domain.usecase.GetFavoriteCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.ToggleFavoriteUseCase
 import javax.inject.Inject
 
 class FavoritesViewModel @Inject constructor(
-    private val courseRepository: CourseRepository,
+    private val getFavoriteCoursesUseCase: GetFavoriteCoursesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ) : ViewModel() {
 
-    private val _favoriteCourses = MutableLiveData<List<Course>>()
-    val favoriteCourses: LiveData<List<Course>> = _favoriteCourses
+    private val _favoriteCourses = MutableSharedFlow<List<Course>>()
+    val favoriteCourses: SharedFlow<List<Course>>
+        get() = _favoriteCourses.asSharedFlow()
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean>
+        get() = _isLoading.asStateFlow()
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    private val _error = MutableSharedFlow<String?>()
+    val error: SharedFlow<String?>
+        get() = _error.asSharedFlow()
 
     fun loadFavoriteCourses() {
         viewModelScope.launch {
             _isLoading.value = true
-            _error.value = null
+            _error.emit(null)
 
-            courseRepository.getFavoriteCourses()
+            getFavoriteCoursesUseCase()
                 .onSuccess { coursesList ->
-                    _favoriteCourses.value = coursesList
+                    _favoriteCourses.emit(coursesList)
                     _isLoading.value = false
                 }
                 .onFailure { exception ->
-                    _error.value = exception.message ?: "Неизвестная ошибка"
+                    _error.emit(exception.message ?: "Неизвестная ошибка")
                     _isLoading.value = false
                 }
         }
@@ -48,7 +55,7 @@ class FavoritesViewModel @Inject constructor(
                     loadFavoriteCourses()
                 }
                 .onFailure { exception ->
-                    _error.value = exception.message ?: "Ошибка при удалении из избранного"
+                    _error.emit(exception.message ?: "Ошибка при удалении из избранного")
                 }
         }
     }
