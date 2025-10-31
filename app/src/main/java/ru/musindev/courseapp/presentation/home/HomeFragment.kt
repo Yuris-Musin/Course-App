@@ -16,10 +16,11 @@ import javax.inject.Inject
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private lateinit var viewModel: HomeViewModel
+
+    @Inject
+    lateinit var vmFactory: HomeViewModel.Factory
+
     private lateinit var adapter: CoursesAdapter
 
     override fun inflaterViewBinding(
@@ -30,7 +31,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
+        viewModel =
+            ViewModelProvider(this, vmFactory)[HomeViewModel::class.java]
 
         (activity as MainActivity).setUIVisibility(showBottomNav = true)
 

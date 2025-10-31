@@ -10,7 +10,7 @@ import ru.musindev.courseapp.domain.usecase.ToggleFavoriteUseCase
 import javax.inject.Singleton
 
 @Module
-class UseCaseModule {
+class DomainModule {
 
     @Provides
     @Singleton

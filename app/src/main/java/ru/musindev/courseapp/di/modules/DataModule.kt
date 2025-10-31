@@ -7,7 +7,7 @@ import ru.musindev.courseapp.domain.repository.CourseRepository
 import javax.inject.Singleton
 
 @Module
-abstract class RepositoryModule {
+abstract class DataModule {
 
     @Binds
     @Singleton

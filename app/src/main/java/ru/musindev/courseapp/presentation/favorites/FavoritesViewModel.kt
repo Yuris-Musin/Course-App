@@ -1,6 +1,7 @@
 package ru.musindev.courseapp.presentation.favorites
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,6 +58,22 @@ class FavoritesViewModel @Inject constructor(
                 .onFailure { exception ->
                     _error.emit(exception.message ?: "Ошибка при удалении из избранного")
                 }
+        }
+    }
+
+    class Factory(
+        private val getFavoriteCoursesUseCase: GetFavoriteCoursesUseCase,
+        private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    ) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(FavoritesViewModel::class.java)) {
+                return FavoritesViewModel(
+                    getFavoriteCoursesUseCase = getFavoriteCoursesUseCase,
+                    toggleFavoriteUseCase = toggleFavoriteUseCase,
+                ) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }
