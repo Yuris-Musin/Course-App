@@ -15,10 +15,11 @@ import javax.inject.Inject
 
 class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private lateinit var viewModel: FavoritesViewModel
+
+    @Inject
+    lateinit var vmFactory: FavoritesViewModel.Factory
+
     private lateinit var adapter: CoursesAdapter
 
     override fun inflaterViewBinding(
@@ -29,7 +30,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[FavoritesViewModel::class.java]
+        viewModel = ViewModelProvider(this, vmFactory)[FavoritesViewModel::class.java]
 
         setupAdapter()
 

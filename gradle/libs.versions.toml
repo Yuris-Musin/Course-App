@@ -1,4 +1,5 @@
 [versions]
+adapterdelegates4KotlinDslViewbinding = "4.3.2"
 agp = "8.11.2"
 kotlin = "2.0.21"
 coreKtx = "1.17.0"
@@ -26,6 +27,8 @@ jetbrainsKotlinJvm = "2.0.21"
 room = "2.6.1"
 
 [libraries]
+adapterdelegates4-kotlin-dsl = { module = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl", version.ref = "adapterdelegates4KotlinDslViewbinding" }
+adapterdelegates4-kotlin-dsl-viewbinding = { module = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding", version.ref = "adapterdelegates4KotlinDslViewbinding" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

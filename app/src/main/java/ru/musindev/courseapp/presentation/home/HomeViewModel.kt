@@ -1,6 +1,7 @@
 package ru.musindev.courseapp.presentation.home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -8,8 +9,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.musindev.courseapp.domain.model.Course
 import ru.musindev.courseapp.domain.usecase.GetCoursesUseCase
+import ru.musindev.courseapp.domain.usecase.GetFavoriteCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.SortCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.ToggleFavoriteUseCase
+import ru.musindev.courseapp.presentation.favorites.FavoritesViewModel
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -75,8 +78,26 @@ class HomeViewModel @Inject constructor(
     private fun applySorting() {
         val sortedList = sortCoursesUseCase.invoke(
             courses = originalCourses,
-            descending = _isSortedDescending.value == true
+            descending = _isSortedDescending.value
         )
         _courses.value = sortedList
+    }
+
+    class Factory(
+        private val getCoursesUseCase: GetCoursesUseCase,
+        private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+        private val sortCoursesUseCase: SortCoursesUseCase
+    ) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+                return HomeViewModel(
+                    getCoursesUseCase = getCoursesUseCase,
+                    toggleFavoriteUseCase = toggleFavoriteUseCase,
+                    sortCoursesUseCase = sortCoursesUseCase
+                ) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
     }
 }

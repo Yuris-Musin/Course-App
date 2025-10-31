@@ -72,9 +72,14 @@ dependencies {
     /** Retrofit - Adapter - Result */
     implementation(libs.retrofit.adapters.result)
 
+    /** ROOM */
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+
     // AdapterDelegates
-    implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.2")
-    implementation("com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2")
+    implementation(libs.adapterdelegates4.kotlin.dsl)
+    implementation(libs.adapterdelegates4.kotlin.dsl.viewbinding)
 
     // Glide для загрузки изображений (опционально)
     implementation("com.github.bumptech.glide:glide:4.16.0")
