@@ -2,10 +2,12 @@ package ru.musindev.courseapp.di.modules
 
 import dagger.Module
 import dagger.Provides
+import ru.musindev.courseapp.domain.usecase.GetCourseByIdUseCase
 import ru.musindev.courseapp.domain.usecase.GetCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.GetFavoriteCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.SortCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.ToggleFavoriteUseCase
+import ru.musindev.courseapp.presentation.coursedetails.CourseDetailsViewModel
 import ru.musindev.courseapp.presentation.favorites.FavoritesViewModel
 import ru.musindev.courseapp.presentation.home.HomeViewModel
 
@@ -30,6 +32,13 @@ class AppModule {
     ) = FavoritesViewModel.Factory(
         getFavoriteCoursesUseCase = getFavoriteCoursesUseCase,
         toggleFavoriteUseCase = toggleFavoriteUseCase,
+    )
+
+    @Provides
+    fun provideCourseDetailsViewModelFactory(
+        getCourseByIdUseCase: GetCourseByIdUseCase
+    ) = CourseDetailsViewModel.Factory(
+        getCourseByIdUseCase = getCourseByIdUseCase
     )
 
 }
