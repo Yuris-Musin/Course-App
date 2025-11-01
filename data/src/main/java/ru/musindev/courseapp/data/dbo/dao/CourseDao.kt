@@ -14,6 +14,9 @@ interface CourseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(courses: List<CourseEntity>)
 
+    @Query("SELECT * FROM courses WHERE id = :id")
+    suspend fun getById(id: Int): CourseEntity?
+
     @Query("DELETE FROM courses")
     suspend fun clear()
 }

@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
+import ru.musindev.courseapp.R
 import ru.musindev.courseapp.core.base.BaseFragment
 import ru.musindev.courseapp.databinding.FragmentHomeBinding
 import ru.musindev.courseapp.presentation.activity.MainActivity
@@ -48,7 +51,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setupAdapter() {
         adapter = CoursesAdapter(
             onCourseClick = { course ->
-                Toast.makeText(context, "Курс: ${course.title}", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(
+                    R.id.action_homeFragment_to_courseDetailsFragment,
+                    bundleOf("courseId" to course.id)
+                )
             },
             onFavoriteClick = { courseId ->
                 viewModel.toggleFavorite(courseId)

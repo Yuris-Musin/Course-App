@@ -5,6 +5,7 @@ import dagger.android.ContributesAndroidInjector
 import ru.musindev.courseapp.presentation.account.AccountFragment
 import ru.musindev.courseapp.presentation.activity.MainActivity
 import ru.musindev.courseapp.presentation.auth.AuthFragment
+import ru.musindev.courseapp.presentation.coursedetails.CourseDetailsFragment
 import ru.musindev.courseapp.presentation.favorites.FavoritesFragment
 import ru.musindev.courseapp.presentation.home.HomeFragment
 
@@ -21,6 +22,9 @@ interface MainModule {
 
     @ContributesAndroidInjector
     fun bindHomeFragment(): HomeFragment
+
+    @ContributesAndroidInjector
+    fun bindCourseDetailsFragment(): CourseDetailsFragment
 
     @ContributesAndroidInjector
     fun bindAccountFragment(): AccountFragment

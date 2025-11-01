@@ -9,10 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.musindev.courseapp.domain.model.Course
 import ru.musindev.courseapp.domain.usecase.GetCoursesUseCase
-import ru.musindev.courseapp.domain.usecase.GetFavoriteCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.SortCoursesUseCase
 import ru.musindev.courseapp.domain.usecase.ToggleFavoriteUseCase
-import ru.musindev.courseapp.presentation.favorites.FavoritesViewModel
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
